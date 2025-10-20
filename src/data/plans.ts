@@ -15,7 +15,7 @@ export interface DownloadLink {
 }
 
 export interface Plan {
-  id:  'premium' | 'plus' | 'standard';
+  id:  'premium' | 'plus' | 'standard' | 'small-office-security'; // <-- Update to include new plan ID
   // crmProductId: string; // <-- Remove from here
   name: string;
   isBestValue: boolean;

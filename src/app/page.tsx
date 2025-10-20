@@ -32,7 +32,7 @@ const HomePage: NextPage = () => {
           <HeroSection />
           <WhyKasperskySection />
           <DynamicPricingSection />
-          <ProductOverviewCard plan={smallOfficeSecurityPlan}/>
+          {smallOfficeSecurityPlan && <ProductOverviewCard plan={smallOfficeSecurityPlan}/>}
           
         </main>
         <Footer />

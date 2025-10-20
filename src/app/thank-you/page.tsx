@@ -1,10 +1,11 @@
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-const ThankYouPage: React.FC = () => {
+const ThankYouPageContent: React.FC = () => {
   const searchParams = useSearchParams();
   const [orderId, setOrderId] = useState<string | null>(null);
   const [productName, setProductName] = useState<string>('Sản phẩm đã mua'); // Default
@@ -89,4 +90,16 @@ const ThankYouPage: React.FC = () => {
   );
 };
 
-export default ThankYouPage;
+export default function ThankYouPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+          <div className="text-center text-gray-700">Đang tải trang cảm ơn...</div>
+        </div>
+      }
+    >
+      <ThankYouPageContent />
+    </React.Suspense>
+  );
+}

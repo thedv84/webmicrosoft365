@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -24,7 +25,7 @@ const removeAccents = (str: string): string => {
     .replace(/Đ/g, 'D'); // Manually handle 'Đ'
 };
 
-const PaymentStatusPage = () => {
+const PaymentStatusPageContent = () => {
   const searchParams = useSearchParams();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   // Read the chosen payment method from the URL
@@ -220,4 +221,16 @@ const PaymentStatusPage = () => {
   );
 };
 
-export default PaymentStatusPage;
+export default function PaymentStatusPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+          <div className="text-center text-gray-700">Đang tải thông tin đơn hàng...</div>
+        </div>
+      }
+    >
+      <PaymentStatusPageContent />
+    </React.Suspense>
+  );
+}
