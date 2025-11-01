@@ -23,6 +23,12 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
     router.push('/checkout');
   };
 
+  const handleLearnMore = () => {
+    if (plan?.id) {
+      router.push(`/products/${plan.id}`);
+    }
+  };
+
   // Find the full variant object based on the selected ID
   const selectedVariant = plan.variants.find(v => v.id === selectedVariantId) as PlanVariant;
 
@@ -44,7 +50,7 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
     <div className={`border rounded-lg p-6 flex flex-col relative ${plan.isBestValue ? 'border-purple-600' : 'border-gray-200'}`}>
       {plan.isBestValue && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-          Ưu đãi tốt nhất
+          Æ¯u Ä‘Ã£i tá»‘t nháº¥t
         </div>
       )}
       
@@ -53,7 +59,7 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
           <span className="font-bold text-2xl text-white">K</span>
         </div>
         <h3 className="text-xl font-bold">{plan.name}</h3>
-        <p className="text-xs text-gray-500">Windows® | macOS® | Android™ | iOS®</p>
+        <p className="text-xs text-gray-500">WindowsÂ® | macOSÂ® | Androidâ„¢ | iOSÂ®</p>
       </div>
 
       {/* START: Updated Dropdown Code */}
@@ -78,27 +84,34 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
 
       <div className="text-center mb-4">
         <div className="flex items-center justify-center space-x-2">
-          {savings > 0 && <span className="text-gray-500 line-through">{formatCurrency(selectedVariant.originalPrice)}₫</span>}
-          {savings > 0 && <span className="text-xs font-semibold bg-green-100 text-green-800 rounded-full px-2 py-0.5">Tiết kiệm {savings}%</span>}
+          {savings > 0 && <span className="text-gray-500 line-through">{formatCurrency(selectedVariant.originalPrice)}â‚«</span>}
+          {savings > 0 && <span className="text-xs font-semibold bg-green-100 text-green-800 rounded-full px-2 py-0.5">Tiáº¿t kiá»‡m {savings}%</span>}
         </div>
         <p className="text-4xl font-bold my-1">
-          {formatCurrency(selectedVariant.discountedPrice)}₫ <span className="text-lg font-normal text-gray-600">{selectedVariant.term}</span>
+          {formatCurrency(selectedVariant.discountedPrice)}â‚« <span className="text-lg font-normal text-gray-600">{selectedVariant.term}</span>
         </p>
         {plan.promoCode && (
-            <p className="text-sm text-red-600">Nhập mã "{plan.promoCode}" giảm 10%!</p>
+            <p className="text-sm text-red-600">Nháº­p mÃ£ "{plan.promoCode}" giáº£m 10%!</p>
         )}
       </div>
 
-       <button 
-        onClick={handleBuyNow} // <-- Update onClick handler
-        className={`w-full text-white font-bold py-3 rounded-lg transition-colors ${plan.buttonColor}`}>
-        Mua ngay
-      </button>
+      <div className="grid grid-cols-1 gap-3 mt-1">
+        <button 
+          onClick={handleBuyNow}
+          className="w-full text-white font-bold py-3 rounded-lg transition-colors bg-ms-orange hover:bg-ms-orangeHover">
+          Mua ngay
+        </button>
+        <button
+          onClick={handleLearnMore}
+          className="w-full border font-semibold py-3 rounded-lg transition-colors text-ms-primary border-ms-primary hover:bg-ms-neutralLight">
+          Tìm hiểu thêm
+        </button>
+      </div>
 
       <div className="border-t my-6"></div>
 
       <div>
-        <h4 className="font-bold mb-3">Tính năng nổi bật:</h4>
+        <h4 className="font-bold mb-3">TÃ­nh nÄƒng ná»•i báº­t:</h4>
         <ul className="space-y-2">
           {plan.features.map((feature, index) => (
             <li key={index} className="flex items-start text-sm"><CheckmarkIcon /> {feature}</li>
@@ -108,7 +121,7 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
 
       {plan.audience && (
         <div className="mt-4">
-            <h4 className="font-bold mb-3">Ai nên dùng?</h4>
+            <h4 className="font-bold mb-3">Ai nÃªn dÃ¹ng?</h4>
             <ul className="space-y-2">
             {plan.audience.map((item, index) => (
                 <li key={index} className="flex items-start text-sm"><CheckmarkIcon /> {item}</li>

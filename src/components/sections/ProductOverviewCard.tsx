@@ -37,7 +37,7 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
       // Optionally redirect to checkout or show a confirmation
       router.push('/checkout');
     } else {
-      alert("Vui lòng chọn một biến thể sản phẩm.");
+      alert("Vui lÃ²ng chá»n má»™t biáº¿n thá»ƒ sáº£n pháº©m.");
     }
   };
 
@@ -61,12 +61,12 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
       <div className="lg:w-1/2 p-4 text-center lg:text-left">
         <h2 className="text-4xl font-bold text-gray-800 mb-4">Kaspersky <br /> Small Office Security</h2>
         <p className="text-gray-600 mb-6 max-w-md mx-auto lg:mx-0">
-          An ninh mạng dành cho các chủ doanh nghiệp nhỏ với rất nhiều việc cần xử lý
+          An ninh máº¡ng dÃ nh cho cÃ¡c chá»§ doanh nghiá»‡p nhá» vá»›i ráº¥t nhiá»u viá»‡c cáº§n xá»­ lÃ½
         </p>
         <ul className="text-gray-700 space-y-2 mb-6 text-left max-w-md mx-auto lg:mx-0">
-          <li>• Được thiết kế kế đặc biệt dành riêng cho các doanh nghiệp nghiệp rất nhỏ</li>
-          <li>• Đặt và quên” không yêu cầu bất kỳ kỹ năng CNTT nào</li>
-          <li>• Giải pháp bảo mật dành cho máy tính, máy chủ, thiết bị di động, dữ liệu và tiền bạc</li>
+          <li>â€¢ ÄÆ°á»£c thiáº¿t káº¿ káº¿ Ä‘áº·c biá»‡t dÃ nh riÃªng cho cÃ¡c doanh nghiá»‡p nghiá»‡p ráº¥t nhá»</li>
+          <li>â€¢ Äáº·t vÃ  quÃªnâ€ khÃ´ng yÃªu cáº§u báº¥t ká»³ ká»¹ nÄƒng CNTT nÃ o</li>
+          <li>â€¢ Giáº£i phÃ¡p báº£o máº­t dÃ nh cho mÃ¡y tÃ­nh, mÃ¡y chá»§, thiáº¿t bá»‹ di Ä‘á»™ng, dá»¯ liá»‡u vÃ  tiá»n báº¡c</li>
         </ul>
 
         {/* Combobox, Price, and Buttons */}
@@ -91,22 +91,22 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
 
           {/* Price Display */}
           <div className="text-red-600 text-5xl font-bold mt-4">
-            {formattedPrice}<span className="text-2xl align-super">đ</span> <span className="text-xl font-normal text-gray-700">{selectedVariant.term}</span>
+            {formattedPrice}<span className="text-2xl align-super">Ä‘</span> <span className="text-xl font-normal text-gray-700">{selectedVariant.term}</span>
           </div>
 
           {/* Buttons */}
           <div className="flex space-x-4 mt-6">
             <button
               onClick={handleBuyNow}
-              className="bg-teal-600 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-700 transition duration-300 shadow-md"
+              className="bg-ms-orange text-white font-bold py-3 px-8 rounded-full hover:bg-ms-orangeHover transition duration-300 shadow-md"
             >
               Mua ngay
             </button>
             <Link
-              href={plan.detailsLink || '#'} // Assuming a detailsLink might exist for the plan
-              className="flex items-center text-teal-600 border border-teal-600 font-bold py-3 px-8 rounded-full hover:bg-teal-50 transition duration-300"
+              href={`/products/${plan.id}`}
+              className="flex items-center text-ms-primary border border-ms-primary font-bold py-3 px-8 rounded-full hover:bg-ms-neutralLight transition duration-300"
             >
-              Tìm hiểu thêm &rarr;
+              TÃ¬m hiá»ƒu thÃªm &rarr;
             </Link>
           </div>
         </div>
@@ -128,3 +128,5 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
 };
 
 export default ProductOverviewCard;
+
+

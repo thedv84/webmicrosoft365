@@ -81,10 +81,10 @@ const ProductDownloadDetails: React.FC<ProductDownloadDetailsProps> = ({ params 
 
         <div className="mt-2 flex justify-center md:justify-start">
           <Link
-            href={`/products/${plan?.id}`}
+            href={`/products/${plan?.crmId}`}
             className="inline-flex items-center bg-red-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-600 transition duration-300"
           >
-            Mua Ngay
+            Mua ngay
           </Link>
         </div>
         <div className="border-t border-gray-200 pt-8 mt-8 space-y-6">

@@ -1,10 +1,9 @@
 'use client';
 
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import type { Plan, PlanVariant } from '@/data/plans'; // Adjust path if needed
+import type { PricingPlan } from '@/types';
 
-// Define the shape of a single item in our cart
-export interface CartItem {
+export interface CartItem extends PricingPlan {
   id: string; // Use variant ID as the unique identifier
   crmProductId: string;
   name: string;
@@ -13,25 +12,23 @@ export interface CartItem {
   quantity: number;
   originalPrice: number;
   discountedPrice: number;
+  price: number; // backward-compat: equals discountedPrice per unit
 }
 
-// Define what the context will provide
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (plan: Plan, variant: PlanVariant) => void;
+  // Supports (plan, quantity, price) and (plan, variant)
+  addToCart: (plan: PricingPlan, quantityOrVariant: number | any, price?: number) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   removeItem: (itemId: string) => void;
   clearCart: () => void;
 }
 
-// Create the context with a default value
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Create the Provider component
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // Load cart from localStorage on initial render
   useEffect(() => {
     try {
       const storedCart = localStorage.getItem('shoppingCart');
@@ -43,31 +40,42 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (plan: Plan, variant: PlanVariant) => {
+  const addToCart = (plan: PricingPlan, quantity: any, price?: number) => {
+    const isVariant = typeof quantity === 'object' && quantity !== null;
+    const variant = isVariant ? quantity : undefined as any;
+    const q = isVariant ? 1 : (Number(quantity) || 1);
+    const unit = isVariant ? (variant.term || '/năm') : '/năm';
+    const originalP = isVariant
+      ? Number(variant?.originalPrice ?? variant?.discountedPrice ?? 0)
+      : Number(price) || 0;
+    const discountedP = isVariant
+      ? Number(variant?.discountedPrice ?? variant?.originalPrice ?? 0)
+      : Number(price) || 0;
+
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === variant.id);
+      const existingItem = prevItems.find(item => item.id === plan.id);
       if (existingItem) {
         return prevItems.map(item =>
-          item.id === variant.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === plan.id ? { ...item, quantity: item.quantity + q } : item
         );
-      } else {
-        const newItem: CartItem = {
-          id: variant.id,
-          crmProductId: variant.crmProductId, // <-- THE FIX IS HERE
-          name: plan.name,
-          image: '/images/kaspersky-box.png',
-          unit: variant.label,
-          quantity: 1,
-          originalPrice: variant.originalPrice,
-          discountedPrice: variant.discountedPrice
-        };
-        return [...prevItems, newItem];
       }
+
+      const newItem: CartItem = {
+        ...plan,
+        crmProductId: String((plan as any).crmProductId ?? ''),
+        name: plan.name,
+        image: (plan as any).productImage ?? '',
+        unit,
+        quantity: q,
+        originalPrice: originalP,
+        discountedPrice: discountedP,
+        price: discountedP,
+      } as unknown as CartItem;
+      return [...prevItems, newItem];
     });
   };
   
@@ -92,7 +100,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Create a custom hook for easy access to the context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {

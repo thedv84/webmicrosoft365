@@ -2,10 +2,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Plan } from '@/data/plans';
+import type { PricingPlan } from '@/types';
 
 interface DownloadProductCardProps {
-  plan: Plan;
+  plan: PricingPlan;
 }
 
 const DownloadProductCard: React.FC<DownloadProductCardProps> = ({ plan }) => {
@@ -33,13 +33,13 @@ const DownloadProductCard: React.FC<DownloadProductCardProps> = ({ plan }) => {
             className="inline-flex items-center bg-teal-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-teal-700 transition duration-300"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            Tải Về Ngay
+            Tải về ngay
           </Link>
           <Link
             href={`/products/${plan.id}`}
-            className="inline-flex items-center bg-red-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-600 transition duration-300"
+            className="inline-flex items-center bg-ms-orange text-white font-semibold py-2 px-6 rounded-md hover:bg-ms-orangeHover transition duration-300"
           >
-            Mua Ngay
+            Mua ngay
           </Link>
         </div>
       </div>
@@ -48,4 +48,3 @@ const DownloadProductCard: React.FC<DownloadProductCardProps> = ({ plan }) => {
 };
 
 export default DownloadProductCard;
-

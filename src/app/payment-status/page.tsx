@@ -175,7 +175,7 @@ const PaymentStatusPageContent = () => {
                 <p className="text-4xl font-bold text-red-600 mb-4">Tổng thanh toán: {formatCurrency(totalAmount)}</p>
                 <p className="text-sm text-gray-700 mb-4">
                   Quý khách mở ứng dụng Ngân hàng, chọn <span className="font-semibold">Quét Mã QR</span> để thanh toán.
-                  Chúng tôi sẽ gửi mã bản quyền Bkav Pro tới email <span className="font-semibold">{customerEmail}</span>
+                  Chúng tôi sẽ gửi mã bản quyền Microsoft 365 tới email <span className="font-semibold">{customerEmail}</span>
                   hoặc SĐT <span className="font-semibold">{customerPhone}</span> ngay sau khi nhận được thanh toán.
                 </p>
                 {/* Placeholder for QR Code image - This should be dynamic based on order details */}

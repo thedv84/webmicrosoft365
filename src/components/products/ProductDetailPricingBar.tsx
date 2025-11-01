@@ -85,9 +85,9 @@ const ProductDetailPricingBar: React.FC<Props> = ({ plan }) => {
         </div>
         <button
           onClick={handleBuy}
-          className="bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg px-8 py-3 whitespace-nowrap"
+          className="bg-ms-orange hover:bg-ms-orangeHover text-white font-bold rounded-lg px-8 py-3 whitespace-nowrap"
         >
-          Mua Ngay
+          Mua ngay
         </button>
       </div>
     </div>

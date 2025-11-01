@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/context/CartContext"; // <-- Import
+import { CartProvider } from "@/context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Phần mềm Kapsersky Chính hãng siêu khuyến mãi",
-  description: "Mua phần mềm Kaspersky chính hãng giá rẻ, khuyến mãi hấp dẫn, bảo vệ an ninh mạng tối ưu cho cá nhân và doanh nghiệp.",
+  title: 'Microsoft 365 chính hãng — Ưu đãi hấp dẫn',
+  description: 'Mua Microsoft 365 Personal và Family chính hãng, giá tốt, hỗ trợ cài đặt và thanh toán tiện lợi.',
 };
 
 export default function RootLayout({
@@ -25,13 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-         <CartProvider> {/* <-- Wrap children */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <CartProvider>
           {children}
         </CartProvider>
       </body>
     </html>
   );
 }
+
