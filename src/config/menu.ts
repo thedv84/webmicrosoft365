@@ -1,4 +1,5 @@
 import type { MenuItem } from '@/types';
+export type { MenuItem };
 
 export const MAIN_MENU: MenuItem[] = [
   {
@@ -22,4 +23,3 @@ export const MAIN_MENU: MenuItem[] = [
     link: '/contact',
   },
 ];
-
