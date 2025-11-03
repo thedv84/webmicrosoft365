@@ -1,5 +1,6 @@
 import React from 'react';
 import { PRICING_PLANS } from '@/data/plans'; // Adjust path if needed
+import type { Plan } from '@/data/plans';
 import DynamicPricingCard from '../ui/DynamicPricingCard';
 
 const DynamicPricingSection = () => {
@@ -8,11 +9,11 @@ const DynamicPricingSection = () => {
       <div id="homepricing" className="container mx-auto px-4">
         {/* We reverse the array to match the visual order in the image (Premium, Plus, Standard) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {PRICING_PLANS
+          {(PRICING_PLANS as Plan[])
           .slice()
           .reverse()
-          .filter(plan => plan.id !== 'small-office-security')
-          .map(plan => (
+          .filter((plan) => plan.id !== 'small-office-security')
+          .map((plan) => (
             <DynamicPricingCard key={plan.id} plan={plan} />
             ))
           }

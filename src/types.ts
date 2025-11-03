@@ -2,6 +2,9 @@ export interface MenuItem {
   id: string;
   label: string;
   link?: string;
+  // Optional fields used by NavbarDropdown
+  isHighlight?: boolean;
+  description?: string;
   items?: MenuItem[];
 }
 

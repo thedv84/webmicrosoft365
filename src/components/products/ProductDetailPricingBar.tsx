@@ -12,11 +12,32 @@ interface Props {
 const ProductDetailPricingBar: React.FC<Props> = ({ plan }) => {
   const { addToCart } = useCart();
   const router = useRouter();
-  const [selectedVariantId, setSelectedVariantId] = useState<string>(plan.variants[0]?.id);
+  // Normalize variants: prefer explicit variants, else derive from priceOptions
+  const variants: PlanVariant[] = useMemo(() => {
+    if (Array.isArray(plan.variants) && plan.variants.length > 0) {
+      return plan.variants as PlanVariant[];
+    }
+    const options = (plan as any).priceOptions as Array<{
+      years: number;
+      devices: number;
+      price: number;
+      sku?: string;
+    }> | undefined;
+    if (!options || options.length === 0) return [] as PlanVariant[];
+    return options.map((opt, idx) => ({
+      id: opt.sku || String(idx),
+      label: `${opt.years} năm / ${opt.devices} thiết bị`,
+      originalPrice: opt.price,
+      discountedPrice: opt.price,
+      term: `${opt.years} năm`,
+    }));
+  }, [plan]);
+
+  const [selectedVariantId, setSelectedVariantId] = useState<string>(variants[0]?.id ?? '');
 
   const selectedVariant = useMemo(() => {
-    return plan.variants.find(v => v.id === selectedVariantId) as PlanVariant;
-  }, [plan.variants, selectedVariantId]);
+    return variants.find(v => v.id === selectedVariantId) as PlanVariant;
+  }, [variants, selectedVariantId]);
 
   const savings = useMemo(() => {
     if (!selectedVariant) return 0;
@@ -58,7 +79,7 @@ const ProductDetailPricingBar: React.FC<Props> = ({ plan }) => {
             onChange={(e) => setSelectedVariantId(e.target.value)}
             className="w-full appearance-none bg-gray-50 border border-teal-500 text-gray-800 py-3 px-4 pr-10 rounded-full focus:outline-none focus:border-teal-600"
           >
-            {plan.variants.map(v => (
+            {variants.map(v => (
               <option key={v.id} value={v.id}>{v.label}</option>
             ))}
           </select>

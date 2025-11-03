@@ -16,6 +16,7 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
   const { addToCart } = useCart();
   const [selectedVariant, setSelectedVariant] = useState<PlanVariant | null>(null);
     const router = useRouter();
+  const variants: PlanVariant[] = plan.variants ?? [];
   // Set the first variant as selected by default when the component mounts or plan changes
   useEffect(() => {
     if (plan.variants && plan.variants.length > 0) {
@@ -25,7 +26,7 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
 
   const handleVariantChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = event.target.value;
-    const variant = plan.variants.find(v => v.id === selectedId);
+    const variant = variants.find(v => v.id === selectedId);
     if (variant) {
       setSelectedVariant(variant);
     }
@@ -78,7 +79,7 @@ const ProductOverviewCard: React.FC<ProductOverviewCardProps> = ({ plan }) => {
               value={selectedVariant.id}
               className="appearance-none w-full bg-gray-50 border border-teal-500 text-gray-700 py-3 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:bg-white focus:border-teal-700 shadow-sm"
             >
-              {plan.variants.map(variant => (
+              {variants.map(variant => (
                 <option key={variant.id} value={variant.id}>
                   {variant.label} ({variant.term})
                 </option>

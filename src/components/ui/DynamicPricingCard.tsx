@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation'; // <-- Import useRouter
 import { useCart } from '@/context/CartContext'; // <-- Import useCart
 import type { Plan, PlanVariant } from '@/data/plans'; // Adjust path if needed
@@ -10,8 +10,29 @@ interface Props {
 }
 
 const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
+  // Normalize variants: prefer explicit variants, else derive from priceOptions
+  const variants: PlanVariant[] = useMemo(() => {
+    if (Array.isArray((plan as any).variants) && (plan as any).variants.length > 0) {
+      return (plan as any).variants as PlanVariant[];
+    }
+    const options = (plan as any).priceOptions as Array<{
+      years: number;
+      devices: number;
+      price: number;
+      sku?: string;
+    }> | undefined;
+    if (!options || options.length === 0) return [] as PlanVariant[];
+    return options.map((opt, idx) => ({
+      id: opt.sku || String(idx),
+      label: `${opt.years} năm / ${opt.devices} thiết bị`,
+      originalPrice: opt.price,
+      discountedPrice: opt.price,
+      term: `${opt.years} năm`,
+    }));
+  }, [plan]);
+
   // State to hold the currently selected variant's ID
-  const [selectedVariantId, setSelectedVariantId] = useState<string>(plan.variants[0].id);
+  const [selectedVariantId, setSelectedVariantId] = useState<string>(variants[0]?.id ?? '');
     const { addToCart } = useCart(); // <-- Get addToCart function
   const router = useRouter(); // <-- Get router instance
 
@@ -30,7 +51,11 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
   };
 
   // Find the full variant object based on the selected ID
-  const selectedVariant = plan.variants.find(v => v.id === selectedVariantId) as PlanVariant;
+  const selectedVariant = variants.find(v => v.id === selectedVariantId) as PlanVariant | undefined;
+
+  if (!selectedVariant) {
+    return null;
+  }
 
   // Calculate savings percentage
   const savings = selectedVariant.originalPrice > 0 
@@ -69,7 +94,7 @@ const DynamicPricingCard: React.FC<Props> = ({ plan }) => {
           onChange={(e) => setSelectedVariantId(e.target.value)}
           className="w-full border border-gray-300 rounded-full px-4 pr-10 py-2 text-center appearance-none focus:outline-none focus:ring-2 focus:ring-cyan-500"
         >
-          {plan.variants.map(variant => (
+          {variants.map(variant => (
             <option key={variant.id} value={variant.id}>{variant.label}</option>
           ))}
         </select>
