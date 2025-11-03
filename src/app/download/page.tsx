@@ -1,6 +1,7 @@
 // src/app/download/page.tsx
 import React from 'react';
 import { PRICING_PLANS } from '@/data/plans';
+import type { PricingPlan } from '@/types';
 import DownloadProductCard from '@/components/downloads/DownloadProductCard';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
@@ -11,7 +12,7 @@ export const metadata = {
 };
 
 const DownloadPage: React.FC = () => {
-  const downloadablePlans = PRICING_PLANS.filter(plan => 
+  const downloadablePlans = (PRICING_PLANS as PricingPlan[]).filter((plan) =>
     plan.productImage && plan.shortDescription && plan.downloadLinks && plan.downloadLinks.length > 0
   );
 
@@ -22,7 +23,7 @@ const DownloadPage: React.FC = () => {
         <div className="container mx-auto max-w-4xl">
           <h1 className="text-4xl font-bold text-gray-800 mb-10 text-center">Tải Microsoft 365</h1>
           <div className="space-y-6">
-            {downloadablePlans.map(plan => (
+            {downloadablePlans.map((plan) => (
               <DownloadProductCard key={plan.id} plan={plan} />
             ))}
           </div>
@@ -34,4 +35,3 @@ const DownloadPage: React.FC = () => {
 };
 
 export default DownloadPage;
-
