@@ -27,7 +27,7 @@ export const PRICING_PLANS: any = [
       {
         years: 1,
         devices: 1,
-        price: 1899000,
+        price: 1499000,
         sku: 'CFQ7TTC0K5BF:0003'
       },
     ],
@@ -58,7 +58,7 @@ export const PRICING_PLANS: any = [
       {
         years: 1,
         devices: 6,
-        price: 2499000,
+        price: 1999000,
         sku: 'CFQ7TTC0K5BF:0005'
       },
     ],
