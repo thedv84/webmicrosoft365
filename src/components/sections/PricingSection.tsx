@@ -35,7 +35,7 @@ const PricingSection = () => {
           <div className="border rounded-lg p-8 bg-white shadow-lg">
             <h3 className="text-2xl font-bold mb-2">Microsoft 365 Personal</h3>
             <p className="text-4xl font-bold mb-4">
-              {formatVND(1899000)}<span className="text-lg font-normal">/năm</span>
+              {formatVND(1499000)}<span className="text-lg font-normal">/năm</span>
             </p>
             <p className="text-gray-600 mb-6">Dành cho một người</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -59,7 +59,7 @@ const PricingSection = () => {
           <div className="border rounded-lg p-8 bg-white shadow-lg">
             <h3 className="text-2xl font-bold mb-2">Microsoft 365 Family</h3>
             <p className="text-4xl font-bold mb-4">
-              {formatVND(2499000)}<span className="text-lg font-normal">/năm</span>
+              {formatVND(1999000)}<span className="text-lg font-normal">/năm</span>
             </p>
             <p className="text-gray-600 mb-6">Dành cho tối đa 6 người</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
